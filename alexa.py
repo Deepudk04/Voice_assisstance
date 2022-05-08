@@ -8,15 +8,14 @@ import pyjokes
 listener = sr.Recognizer()
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)
+engine.setProperty('voice', voices[0].id)
 
 def talk(text):
     engine.say(text)
     engine.runAndWait()
 talk('Enter Your name ')
 name=input("Enter Your name ")
-talk('Hi, '+ name+', I am Alexa ,Nice To Meet You.')
-talk('What Can I do For You')
+talk('Hi, '+ name+', I am Harry ,Nice To Meet You.What Can I do For You')
 def take_command():
     try:
         with sr.Microphone() as source:
@@ -24,11 +23,11 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-            if 'alexa' in command:
-                command = command.replace('alexa', '')
+            if 'harry' in command:
+                command = command.replace('harry', '')
                 print(command)
-    except:
-        pass
+    except :
+        print('Error ')
     return command
 
 
@@ -42,8 +41,8 @@ def run_alexa():
     elif 'time' in command:
         time = datetime.datetime.now().strftime('%I:%M %p')
         talk('Current time is ' + time)
-    elif 'who is' in command:
-        person = command.replace('who is', '')
+    elif 'who' in command:
+        person=command.replace('who is','')
         info = wikipedia.summary(person, 1)
         print(info)
         talk(info)
@@ -54,8 +53,6 @@ def run_alexa():
     elif 'joke' in command:
         talk(pyjokes.get_joke())
     else:
-        talk('Please say the command again.')
-
-
+        pywhatkit.search(command)
 while True:
     run_alexa()
